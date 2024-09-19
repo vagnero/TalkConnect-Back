@@ -1,4 +1,4 @@
-package com.talkconnect.controllers;
+package com.talkconnect.controllers.user;
 
 import java.util.List;
 
