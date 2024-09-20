@@ -22,9 +22,12 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;
+    @Column(nullable = true)
     private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private Boolean deleted;
 
 
     

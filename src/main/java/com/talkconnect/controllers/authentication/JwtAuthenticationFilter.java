@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.talkconnect.services.token.JwtService;
+import com.talkconnect.services.authentication.JwtService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
 
       ) throws ServletException, IOException {
-            if (request.getServletPath().contains("/api/auth")){
+            if (request.getServletPath().contains("/auth")){
                   filterChain.doFilter(request, response);
                   return;
             }
