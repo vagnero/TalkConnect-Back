@@ -3,6 +3,7 @@ package com.talkconnect.configs;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,24 +37,24 @@ public class SecurityConfiguration {
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
-                                .cors().and()
-                                .csrf(AbstractHttpConfigurer::disable)
-                                .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
-                                                .permitAll()
-                                                .requestMatchers("/h2-console/**").permitAll()
-                                               
-                                                .anyRequest()
-                                                .authenticated())
-                                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-                                .authenticationProvider(authenticationProvider)
-                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                                .logout(logout -> logout.logoutUrl("/logout")
-                                                .addLogoutHandler(logoutHandler)
-                                                .logoutSuccessHandler((request, response,
-                                                                authentication) -> SecurityContextHolder
-                                                                                .clearContext()))
-                                .headers().frameOptions().disable(); // Desabilitar proteção de frame
+            http
+                    .cors(withDefaults())
+                    .csrf(AbstractHttpConfigurer::disable)
+                    .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
+                            .permitAll()
+                            .requestMatchers("/h2-console/**").permitAll()
+
+                            .anyRequest()
+                            .authenticated())
+                    .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                    .authenticationProvider(authenticationProvider)
+                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                    .logout(logout -> logout.logoutUrl("/logout")
+                            .addLogoutHandler(logoutHandler)
+                            .logoutSuccessHandler((request, response,
+                                    authentication) -> SecurityContextHolder
+                                    .clearContext()))
+                    .headers(headers -> headers.frameOptions().disable()); // Desabilitar proteção de frame
 
                 return http.build();
         }
