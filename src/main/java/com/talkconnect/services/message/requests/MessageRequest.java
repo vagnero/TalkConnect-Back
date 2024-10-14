@@ -1,14 +1,17 @@
-package com.talkconnect.services.authentication.requests;
+package com.talkconnect.services.message.requests;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-    private String username;
-    String password;
+public class MessageRequest {
+    private String content;
+
+    // getters and setters
 }

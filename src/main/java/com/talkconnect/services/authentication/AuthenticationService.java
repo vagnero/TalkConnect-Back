@@ -34,8 +34,8 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request){
         var user = User.builder()
         .name(request.getName())
-        .email(request.getEmail())
-        .password(request.getPassword())
+        .username(request.getUsername())
+        .password(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
         .deleted(false) // Definindo como false
         .createdAt(LocalDateTime.now()) // Definindo a data atual
@@ -57,11 +57,11 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                request.getEmail(),
+                request.getUsername(),
                 request.getPassword()
             )
         );
-        var user = repository.findByEmail(request.getEmail())
+        var user = repository.findByUsername(request.getUsername())
         .orElseThrow();
         var jwtToken = jwtService.generateToken(user.getId(), user);
         var refreshToken = jwtService.generateRefreshToken(user.getId(), user);
@@ -94,7 +94,7 @@ public void refreshToken(
     if (refreshToken != null) {
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
-            var user = this.repository.findByEmail(userEmail)
+            var user = this.repository.findByUsername(userEmail)
                     .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user.getId(), user);
@@ -112,16 +112,20 @@ public void refreshToken(
 
 
 
-public Integer getUserIdFromCookie(HttpServletRequest request) {
+public Integer getUserIdFromToken(HttpServletRequest request) {
+    // Obtendo os cookies da requisição
     Cookie[] cookies = request.getCookies();
+    
     if (cookies != null) {
         for (Cookie cookie : cookies) {
-            if ("token".equals(cookie.getName())) { // Verifique o nome do cookie
-                return Integer.valueOf(cookie.getValue()); // Converta o valor do cookie para Integer
+            // Verifica se o cookie com nome "token" existe
+            if ("token".equals(cookie.getName())) {
+                String token = cookie.getValue(); // Obtém o valor do token JWT
+                return jwtService.getUserIdFromToken(token); // Extrai o ID do usuário a partir do token
             }
         }
     }
-    return 0; // Retorna 0 se o cookie não for encontrado
+    return 0; // Retorna 0 caso o token não seja encontrado ou seja inválido
 }
 
 }
