@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration {
 
         // Lista que permite rotas que todos tem acesso...
-        private static final String[] WHITE_LIST_URL = { "api/auth/**",
+        private static final String[] WHITE_LIST_URL = { "/api/auth/**",
                         // "/protoon/municipe/municipes",
                         // "/protoon/municipe/endereco",
 
@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                     .csrf(AbstractHttpConfigurer::disable)
                     .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
                             .permitAll()
-                            .requestMatchers("/h2-console/**").permitAll()
+                            .requestMatchers("/api/h2-console/**").permitAll()
 
                             .anyRequest()
                             .authenticated())
