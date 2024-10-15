@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                     .csrf(AbstractHttpConfigurer::disable)
                     .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
                             .permitAll()
-                            .requestMatchers("/api/h2-console/**").permitAll()
+                            .requestMatchers("/h2-console/**").permitAll()
 
                             .anyRequest()
                             .authenticated())
