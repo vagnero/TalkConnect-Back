@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration {
 
         // Lista que permite rotas que todos tem acesso...
-        private static final String[] WHITE_LIST_URL = { "/auth/**",
+        private static final String[] WHITE_LIST_URL = { "api/auth/**",
                         // "/protoon/municipe/municipes",
                         // "/protoon/municipe/endereco",
 
