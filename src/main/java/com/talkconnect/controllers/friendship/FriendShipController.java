@@ -19,7 +19,7 @@ import com.talkconnect.services.friendship.FriendShipService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(value = "friendship")
+@RequestMapping(value = "api/friendship")
 public class FriendShipController {
     @Autowired
     FriendShipService service;

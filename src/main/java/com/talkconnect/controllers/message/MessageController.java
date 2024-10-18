@@ -22,7 +22,7 @@ import com.talkconnect.services.message.requests.MessageRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(value = "message")
+@RequestMapping(value = "api/message")
 public class MessageController {
     @Autowired
     MessageService service;

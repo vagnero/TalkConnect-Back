@@ -17,7 +17,7 @@ import com.talkconnect.services.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(value = "user")
+@RequestMapping(value = "api/user")
 public class UserController {
     @Autowired
     UserService service;
