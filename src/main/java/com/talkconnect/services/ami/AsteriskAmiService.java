@@ -32,7 +32,7 @@ public class AsteriskAmiService {
     @PostConstruct
     public void init() {
         try {
-            ManagerConnectionFactory factory = new ManagerConnectionFactory(domainUrl, username, password);
+            ManagerConnectionFactory factory = new ManagerConnectionFactory(host, username, password);
             this.managerConnection = factory.createManagerConnection();
             managerConnection.addEventListener(asteriskEventListener);  // Adiciona o listener
             managerConnection.login();
