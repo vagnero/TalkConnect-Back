@@ -43,7 +43,8 @@ public class AsteriskEventListener implements ManagerEventListener {
         if (sb.length() > 2) {
             sb.setLength(sb.length() - 2);
         }
-        sb.append("]");
+        sb.append("]\n");
+        sb.append("-".repeat(50));
 
         return sb.toString();
     }
