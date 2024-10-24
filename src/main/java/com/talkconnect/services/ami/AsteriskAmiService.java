@@ -25,7 +25,7 @@ public class AsteriskAmiService {
     @Autowired
     private AsteriskEventListener asteriskEventListener;
 
-    private final String host = "10.0.0.190";  // Host do Asterisk
+    private final String host = "localhost";  // Host do Asterisk
     private final String username = "admin";  // Usuário AMI
     private final String password = "1234";  // Senha AMI
 
