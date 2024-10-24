@@ -14,7 +14,7 @@ import jakarta.annotation.PostConstruct;
 
 @Service
 public class AsteriskAmiService {
-    @Value("${domain.url}")
+    @Value("${pure.domain}")
     private String domainUrl;
 
     @Value("${ip.url}")
