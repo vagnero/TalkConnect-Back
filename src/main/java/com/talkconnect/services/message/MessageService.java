@@ -35,6 +35,18 @@ public class MessageService {
         return repository.save(message);
     }
 
+    public Message roomMessage(Long senderId, MessageRequest request){
+        User sender = userRepository.getReferenceById(senderId);
+        var message = Message.builder()
+        .createdAt(LocalDateTime.now())
+        .deleted(false)
+        .sender(sender)
+        .content(request.getContent())
+        .isRead(false)
+        .build();
+    return message;
+}
+
     public List<Message> getAllFriendsMessages(Long senderId, Long receiverId) {
         List<Message> list = repository.findMessagesBetweenTwoUsers(senderId, receiverId);
         // Incluindo o filtro para ambos os sentidos (sender -> receiver ou receiver -> sender)

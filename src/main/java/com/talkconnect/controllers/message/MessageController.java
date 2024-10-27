@@ -57,6 +57,18 @@ public ResponseEntity<Message> insertMessage(@PathVariable Long receiverId, @Req
     return ResponseEntity.created(uri).body(message);
 }
 
+@PostMapping("/room/{receiverId}")
+public ResponseEntity<Message> createMessage(@PathVariable Long receiverId, @RequestBody MessageRequest request, HttpServletRequest httpRequest) {
+    Long senderId = Long.valueOf(authenticationService.getUserIdFromToken(httpRequest).toString());
+    Message message = service.roomMessage(senderId, request);
+    System.out.println(message);
+    // Enviar a mensagem através do WebSocket
+    messagingTemplate.convertAndSend("/topic/messages/" + receiverId, message);
+   
+    return ResponseEntity.ok().body(message);
+}
+
+    
 @GetMapping(value = "/get/{friendId}")
 public ResponseEntity<List<Message>> findAllMessages(HttpServletRequest request, @PathVariable Long friendId) {
     Long senderId = Long.valueOf(authenticationService.getUserIdFromToken(request));
